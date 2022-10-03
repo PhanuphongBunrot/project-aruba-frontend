@@ -152,11 +152,12 @@
                         <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                             <!-- <th class="min-w-200px fs-3">#</th> -->
 
-                            <th class="min-w-200px fs-3">Max IP</th>
-                            <th class="min-w-200px fs-3">Ap name</th>
-                            <th class="min-w-200px fs-3">Status</th>
-                            <th class="min-w-200px fs-3">Last day</th>
-                            <th class="min-w-200px fs-3">Time</th>
+                            <th class="min-w-100px fs-3">Mac IP</th>
+                            <th class="min-w-100px fs-3">IP</th>
+                            <th class="min-w-100px fs-3">Ap name</th>
+                            <th class="min-w-100px fs-3">Status</th>
+                            <th class="min-w-100px fs-3">Last day</th>
+                            <th class="min-w-100px fs-3">Time</th>
 
 
                         </tr>
@@ -170,6 +171,7 @@
                             <tr class=" fs-5">
 
                                 <td> <a href="?page=3&max=<?php echo ($json["data"][$i]["Max"]) ?>#divOne"><?php echo ($json["data"][$i]["Max"]) ?></a></td>
+                                <td><?php echo ($json["data"][$i]["ip"]) ?></td>
                                 <td><?php echo ($json["data"][$i]["Apname"]) ?></td>
                                 <?php if ($json["data"][$i]["Status"] === 'Online') { ?>
                                     <td style="color:#65CF01"><?php echo ($json["data"][$i]["Status"]) ?></td>
@@ -220,7 +222,7 @@
                         <?php endif; ?>
 
                         <?php if ($page < ceil($total_pages / $num_results_on_page)) : ?>
-                            <li class="next"><a href="?page=3&pagev=<?php echo $page + 1 ?>"> >> </a></li>.
+                            <li class="next"><a href="?page=3&pagev=<?php echo $page + 1 ?>"> >> </a></li>
                         <?php endif; ?>
                     </ul>
                 <?php endif; ?>

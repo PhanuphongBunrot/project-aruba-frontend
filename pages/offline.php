@@ -41,12 +41,12 @@
           <thead>
             <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
               <!-- <th class="min-w-200px fs-3">#</th> -->
-             
-              <th class="min-w-200px fs-3">Max IP</th>
-              <th class="min-w-200px fs-3">Ap name</th>
-              <th class="min-w-200px fs-3">Status</th>
-              <th class="min-w-200px fs-3">Last day</th>
-              <th class="min-w-200px fs-3">Time</th>
+              <th class="min-w-100px fs-3">Mac IP</th>
+              <th class="min-w-100px fs-3">IP</th>
+              <th class="min-w-100px fs-3">Ap name</th>
+              <th class="min-w-100px fs-3">Status</th>
+              <th class="min-w-100px fs-3">Last day</th>
+              <th class="min-w-100px fs-3">Time</th>
 
 
             </tr>
@@ -59,8 +59,9 @@
               if ($ip_status[$i]['Status'] === "Offline") {
             ?>
                 <tr class=" fs-5">
-                
+                  
                   <td><?php echo $ip_status[$i]['Max']; ?></td>
+                  <td><?php echo $ip_status[$i]['ip']; ?></td>
                   <td><?php echo $ip_status[$i]['Apname']; ?> </td>
                   <td style="color:#E10808;"><?php echo $ip_status[$i]['Status']; ?> </td>
                   <td><?php echo $ip_status[$i]['d/m/y']; ?> </td>
