@@ -161,7 +161,7 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody></tbody>
                         <?php
                         //print_r($data[0][1]);
                         for ($i = 0; $i < count($json["data"]); $i++) :
@@ -196,11 +196,11 @@
 
                 <?php if (ceil($total_pages / $num_results_on_page) > 0) : ?>
                     <ul class="pagination">
-
-                        <li class="prev"><a href="?page=3&pagev=<?php echo $page - 1 ?>">
-                                << </a>
-                        </li>
-
+                        <?php if ($page > 1) : ?>
+                            <li class="prev"><a href="?page=3&pagev=<?php echo $page - 1 ?>">
+                                    << </a>
+                            </li>
+                        <?php endif; ?>
                         <?php if ($page > 3) : ?>
                             <li class="start"><a href="?page=3&pagev=1">1</a></li>
                             <li class="dots">...</li>
@@ -220,7 +220,7 @@
                         <?php endif; ?>
 
                         <?php if ($page < ceil($total_pages / $num_results_on_page)) : ?>
-                            <li class="next"><a href="?page=3&pagev=<?php echo $page + 1 ?>"> >> </a></li>
+                            <li class="next"><a href="?page=3&pagev=<?php echo $page + 1 ?>"> >> </a></li>.
                         <?php endif; ?>
                     </ul>
                 <?php endif; ?>
@@ -230,8 +230,3 @@
             </div>
         </div>
     </div>
-
-    
-
-            
-       
