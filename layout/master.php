@@ -41,6 +41,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
 						include __DIR__ . '/../pages/pages-6.php';
 					} else if ($page == '7') {
 						include __DIR__ . '/../pages/offline.php';
+					} else if ($page == '8') {
+						include __DIR__ . '/../pages/apname.php';
 					} else {
 						// page
 						include '_content.php';

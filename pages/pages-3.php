@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    <link href="popup/style.css" />
+
 
     <title>Document</title>
 </head>
@@ -96,6 +96,9 @@
     .pagination .currentpage a:hover {
         background-color: #518acb;
     }
+
+
+ 
 </style>
 
 <body>
@@ -146,6 +149,7 @@
     <div class="container">
 
         <div class=" fs-2   shadow p-3 mb-5 bg-body rounded">
+            
             <div class="table-responsive fs-3">
                 <table class="table table-striped gy-7 gs-7" id="test">
                     <thead>
@@ -163,35 +167,35 @@
                         </tr>
                     </thead>
                     <tbody></tbody>
-                        <?php
-                        //print_r($data[0][1]);
-                        for ($i = 0; $i < count($json["data"]); $i++) :
+                    <?php
+                    //print_r($data[0][1]);
+                    for ($i = 0; $i < count($json["data"]); $i++) :
 
-                        ?>
-                            <tr class=" fs-5">
+                    ?>
+                        <tr class=" fs-5">
 
-                                <td> <a href="?page=3&max=<?php echo ($json["data"][$i]["Max"]) ?>#divOne"><?php echo ($json["data"][$i]["Max"]) ?></a></td>
-                                <td><?php echo ($json["data"][$i]["ip"]) ?></td>
-                                <td><?php echo ($json["data"][$i]["Apname"]) ?></td>
-                                <?php if ($json["data"][$i]["Status"] === 'Online') { ?>
-                                    <td style="color:#65CF01"><?php echo ($json["data"][$i]["Status"]) ?></td>
-                                    <td><?php echo ($json["data"][$i]["d/m/y"]) ?></td>
-                                    <td><?php echo ($json["data"][$i]["time"]) ?></td>
-                                <?php } else if ($json["data"][$i]["Status"] === 'Offline') {
-                                ?>
-                                    <td style="color:#E10808"><?php echo $json["data"][$i]["Status"]; ?></td>
+                            <td> <?php echo ($json["data"][$i]["Max"]) ?></td>
+                            <td><?php echo ($json["data"][$i]["ip"]) ?></td>
+                            <td><?php echo ($json["data"][$i]["Apname"]) ?></td>
+                            <?php if ($json["data"][$i]["Status"] === 'Online') { ?>
+                                <td style="color:#65CF01"><?php echo ($json["data"][$i]["Status"]) ?></td>
+                                <td><?php echo ($json["data"][$i]["d/m/y"]) ?></td>
+                                <td><?php echo ($json["data"][$i]["time"]) ?></td>
+                            <?php } else if ($json["data"][$i]["Status"] === 'Offline') {
+                            ?>
+                                <td style="color:#E10808"><?php echo $json["data"][$i]["Status"]; ?></td>
 
-                                    <td><?php echo ($json["data"][$i]["d/m/y"]); ?></td>
+                                <td><?php echo ($json["data"][$i]["d/m/y"]); ?></td>
 
-                                    <td><?php echo ($json["data"][$i]["time"]); ?></td>
+                                <td><?php echo ($json["data"][$i]["time"]); ?></td>
+                                
+ 
+
+                            <?php } ?>
 
 
-
-                                <?php } ?>
-
-
-                            </tr>
-                        <?php endfor ?>
+                        </tr>
+                    <?php endfor ?>
 
                     </tbody>
                 </table>
@@ -226,9 +230,13 @@
                         <?php endif; ?>
                     </ul>
                 <?php endif; ?>
-
-
-
             </div>
+            
         </div>
     </div>
+
+
+
+</body>
+
+</html>

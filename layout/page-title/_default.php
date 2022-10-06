@@ -16,6 +16,8 @@ if ($page == 'index') {
 	$title = "All Master ";
 } else if ($page == '7') {
 	$title = "Detail Offline ";
+} else if ($page == '8') {
+	$title = "Mac Name";
 }
 ?>
 <!--begin::Page title-->
