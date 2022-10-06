@@ -3,4 +3,6 @@
      <p style ="text-align:center;font-size:80px;color:"><?php  $to = $_SESSION['on'] + $_SESSION['off']; 
             echo $to;
      ?> </p>
+     <?php unset($_SESSION['on']);?>
+    <?php unset($_SESSION['off']);?>
 </div>

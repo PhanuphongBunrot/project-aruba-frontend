@@ -13,6 +13,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <link href="popup/style.css"/>
 </head>
+<style>
+     .a{
+        position: absolute;
+        font-size: 10px;
+        right: 15%;
+    }
+</style>
 <body>
   
 
@@ -34,6 +41,8 @@ if(isset($_GET['ip'])){
     $conn = $mon->iparuba->ipmaster;
     $data = $conn->find()->toArray();
     ?>
+    <p class="a"> <?php echo "อัพเดชเวลาล่าสุด ".$data[0]["d/m/y"]." ".$data[0]["time"]; ?></p>
+            
     <div class="table-responsive fs-3">
         <table class="table table-striped gy-7 gs-7" id="test">
             <thead>

@@ -4,37 +4,42 @@
 <?php 
 //include'testtime.php';
 require '../vendor/autoload.php';
+session_start();
 $conn = new MongoDB\Client();
 $companydb  = $conn->iparuba;
 $empcollection = $companydb->ipaps;
-$Ap = $_POST['Ap'];
-$Sn = $_POST['Sn'];
- 
-if (isset($_GET['max'])) {
 
-    $max = $_GET['max'];
-   
+  $apname = $_POST['apname'];
+  $sn = $_POST['sn'];
+
+ 
+
+     $max = $_SESSION['mac'];
+  
+
    $updateResult = $empcollection->replaceOne( //Update ข้อมูล
     ['Max' => $max],
     ['Max' => $max, 
-     'Apname' => $Ap ,
-     'S/N'=> $Sn
+     'Apname' => $apname ,
+     'S/N'=> $sn,
+     'ip'=> $_SESSION['ip'],
     ]
   );
-}
 
 
-// echo ".";
-//                 echo "<script>";
-//                 echo "Swal.fire({
-//                     icon: 'success',
-//                     title: 'บันทึกข้อมูลสำเร็จ',
-//                     showConfirmButton: false,
-//                     timer: 2000
-//                     }).then((result) => {
-//                         if (result.isDismissed) {
-//                             window.location.href ='/project/';
-//                         }
-//                       })";
-//                 echo "</script>";
+unset($_SESSION['mac']);
+unset($_SESSION['ip']);
+echo ".";
+                echo "<script>";
+                echo "Swal.fire({
+                    icon: 'success',
+                    title: 'บันทึกข้อมูลสำเร็จ',
+                    showConfirmButton: false,
+                    timer: 2000
+                    }).then((result) => {
+                        if (result.isDismissed) {
+                            window.location.href ='/project/?page=3';
+                        }
+                      })";
+                echo "</script>";
 ?>
