@@ -98,7 +98,7 @@
     }
 
 
-    .a{
+    .a {
         position: absolute;
         font-size: 10px;
         right: 15%;
@@ -112,7 +112,7 @@
     $mon = new MongoDB\Client();
     $conn = $mon->iparuba->statustotals;
     $ip_status = $conn->find()->toArray();
-    
+
     $mon = new MongoDB\Client();
     $conn = $mon->iparuba->ipaps;
     $ip_ap = $conn->find()->toArray();
@@ -148,17 +148,22 @@
     curl_close($curl);
     $json = json_decode($resp, true);
 
-
-
-
-
-
+    for ($y = 0; $y < count($json["data"]); $y++) {
+        $ip_json[] = $json["data"][$y]["Max"];
+    }
+    for ($l = 0; $l < count($ip_ap); $l++) {
+        $ip_ap_arr[] = $ip_ap[$l]["Max"];
+    }
+    $inn = array_intersect($ip_ap_arr,$ip_json );
+  
+    $int =  key($inn)-1;
+    
     ?>
     <div class="container">
 
         <div class=" fs-2   shadow p-3 mb-5 bg-body rounded">
-        <p class="a"> <?php echo "อัพเดชเวลาล่าสุด ".$json["data"][0]["d/m/y"]." ".$json["data"][0]["time"]; ?></p>
-     
+            <p class="a"> <?php echo "อัพเดชเวลาล่าสุด " . $json["data"][0]["d/m/y"] . " " . $json["data"][0]["time"]; ?></p>
+
             <div class="table-responsive fs-3">
                 <table class="table table-striped gy-7 gs-7" id="test">
                     <thead>
@@ -171,7 +176,7 @@
                             <th class="min-w-100px fs-3">Status</th>
                             <th class="min-w-100px fs-3">Last day</th>
                             <th class="min-w-100px fs-3">Time</th>
-                            
+
 
 
                         </tr>
@@ -179,17 +184,21 @@
                     <tbody></tbody>
                     <?php
                     //print_r($data[0][1]);
+                  
+                    $dum = 0;
                     for ($i = 0; $i < count($json["data"]); $i++) :
-
+                        
+                         $int = $int + 1 ;
+                        
                     ?>
                         <tr class=" fs-5">
-
+                        
                             <td><a href="?page=8&mac=<?php echo ($json["data"][$i]["Max"]) ?>"> <?php echo ($json["data"][$i]["Max"]) ?></a></td>
                             <td><?php echo ($json["data"][$i]["ip"]) ?></td>
-                            <td><?php echo ( $ip_ap[$i]["Apname"]) ?></td>
+                            <td><?php echo ($ip_ap[$int]["Apname"]) ?></td>
                             <?php if ($json["data"][$i]["Status"] === 'Online') { ?>
                                 <td style="color:#65CF01"><?php echo ($json["data"][$i]["Status"]) ?></td>
-                                <td><?php echo ($json["data"][$i]["d/m/y"]) ?></td>
+                                <td><?php echo date("d/m/Y ", strtotime($json["data"][$i]["d/m/y"])) ?></td>
                                 <td><?php echo ($json["data"][$i]["time"]) ?></td>
                             <?php } else if ($json["data"][$i]["Status"] === 'Offline') {
                             ?>
@@ -198,9 +207,9 @@
                                 <td><?php echo ($json["data"][$i]["d/m/y"]); ?></td>
 
                                 <td><?php echo ($json["data"][$i]["time"]); ?></td>
-                              
-                                
- 
+
+
+
 
                             <?php } ?>
 
@@ -242,12 +251,12 @@
                     </ul>
                 <?php endif; ?>
             </div>
-            
+
         </div>
     </div>
-<style>
-   
-</style>
+    <style>
+
+    </style>
 
 
 </body>

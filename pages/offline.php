@@ -24,12 +24,86 @@
   $conn = $mon->iparuba->statustotals;
   $ip_status = $conn->find()->toArray();
 
+  $mon = new MongoDB\Client();
+  $conn = $mon->iparuba->offline;
+  $data_offline = $conn->find()->toArray();
 
-  // for ($o = 0; $o < count($ip_status); $o++) {
-  //   if ($ip_status[$o]['Status'] === "Offline") {
-  //     echo  $ip_status[$o]['Max'];
-  //   }
-  // }
+  $conn = new MongoDB\Client();
+  $companydb  = $conn->iparuba;
+  $delere = $companydb->offline;
+   
+  function dateDiv($t1, $t2)
+  { // ส่งวันที่ที่ต้องการเปรียบเทียบ ในรูปแบบ มาตรฐาน 2006-03-27 21:39:12
+
+    $t1Arr = splitTime($t1);
+    $t2Arr = splitTime($t2);
+
+    $Time1 = mktime($t1Arr["h"], $t1Arr["m"], $t1Arr["s"], $t1Arr["M"], $t1Arr["D"], $t1Arr["Y"]);
+    $Time2 = mktime($t2Arr["h"], $t2Arr["m"], $t2Arr["s"], $t2Arr["M"], $t2Arr["D"], $t2Arr["Y"]);
+    $TimeDiv = abs($Time2 - $Time1);
+
+    $Time["D"] = intval($TimeDiv / 86400); // จำนวนวัน
+    $Time["H"] = intval(($TimeDiv % 86400) / 3600); // จำนวน ชั่วโมง
+    $Time["M"] = intval((($TimeDiv % 86400) % 3600) / 60); // จำนวน นาที
+    $Time["S"] = intval(((($TimeDiv % 86400) % 3600) % 60)); // จำนวน วินาที
+    return $Time;
+  }
+
+
+
+  function splitTime($time)
+  { // เวลาในรูปแบบ มาตรฐาน 2006-03-27 21:39:12 
+    $timeArr["Y"] = substr($time, 2, 2);
+    $timeArr["M"] = substr($time, 5, 2);
+    $timeArr["D"] = substr($time, 8, 2);
+    $timeArr["h"] = substr($time, 11, 2);
+    $timeArr["m"] = substr($time, 14, 2);
+    $timeArr["s"] = substr($time, 17, 2);
+    return $timeArr;
+  }
+  
+  $oo = -1;
+  for ($i = 0; $i  < count($ip_status); $i++) {
+    if ($ip_status[$i]["Status"] === "Online") {
+       $delereResult = $delere->deleteMany(
+        ['Max' => $ip_status[$i]["Max"]]
+      );
+    }
+    if ($ip_status[$i]["Status"] === "Offline") {
+      $ip_offline_arr[] =  $ip_status[$i]['Max'];
+      for ($f = 0; $f < count($data_offline); $f++) {
+        if ($ip_status[$i]['Max'] === $data_offline[$f]['Max']) {
+          $oo = $oo + 1;
+          $o = $o + 1;
+          $time_arr[] =  [
+            'Mac' => $data_offline[$f]['Max'],
+            'Tmie'  => $data_offline[$f]['Time']
+
+
+          ];
+        }
+      }
+     
+    }
+    
+    }
+  
+  echo "<pre>";
+  print_r($time_arr );
+  echo "</pre>";
+  $int =  $num[0];
+  
+
+  if ($ip_offline_arr != null) {
+  for ($go = 0; $go < count($ip_offline_arr); $go++) {
+
+
+    $t1 = $data[$go][0][0];
+    $t2 = $data[$go][$int - 1][$int - 1];
+    $time = dateDiv($t1, $t2);
+  }
+
+  }
 
 
   ?>
@@ -47,6 +121,7 @@
               <th class="min-w-100px fs-3">Status</th>
               <th class="min-w-100px fs-3">Last day</th>
               <th class="min-w-100px fs-3">Time</th>
+              <th class="min-w-100px fs-3">Time Offline</th>
 
 
             </tr>
@@ -55,17 +130,18 @@
             <?php
 
             for ($i = 0; $i < count($ip_status); $i++) {
-              
+
               if ($ip_status[$i]['Status'] === "Offline") {
             ?>
                 <tr class=" fs-5">
-                  
+
                   <td><?php echo $ip_status[$i]['Max']; ?></td>
                   <td><?php echo $ip_status[$i]['ip']; ?></td>
                   <td><?php echo $ip_status[$i]['Apname']; ?> </td>
                   <td style="color:#E10808;"><?php echo $ip_status[$i]['Status']; ?> </td>
-                  <td><?php echo $ip_status[$i]['d/m/y']; ?> </td>
+                  <td><?php echo date("d/m/Y ", strtotime($ip_status[$i]["d/m/y"])) ?> </td>
                   <td><?php echo $ip_status[$i]['time']; ?> </td>
+                  <td><?php echo $time['D'] . " วัน " . $time['H'] . " ชั่วโมง " . $time['M'] . " นาที " ?></td>
                 </tr>
             <?php
               }
