@@ -77,33 +77,41 @@
           $o = $o + 1;
           $time_arr[] =  [
             'Mac' => $data_offline[$f]['Max'],
-            'Tmie'  => $data_offline[$f]['Time']
+            'Time'  => $data_offline[$f]['Time']
 
 
           ];
         }
       }
+     $num[]= $o ;
+    $o = 0;
      
     }
     
     }
   
-  echo "<pre>";
-  print_r($time_arr );
-  echo "</pre>";
-  $int =  $num[0];
+ 
+if ($ip_offline_arr != null){
+  $result = $time_arr;
+foreach ($result as $element) {
+    $data[$element['Mac']][] = $element;
+}
+
   
 
-  if ($ip_offline_arr != null) {
-  for ($go = 0; $go < count($ip_offline_arr); $go++) {
 
+for ($p = 0 ; $p < count($ip_offline_arr) ; $p ++){
+    $int = $num[$p] - 1;
+     $name_mac = $ip_offline_arr[$p];
+    
+     $t1 =   $data[$name_mac][0]['Time'];
+     $t2 =   $data[$name_mac][$int]['Time'];
+    $time_off [] =  $time = dateDiv($t1, $t2);
 
-    $t1 = $data[$go][0][0];
-    $t2 = $data[$go][$int - 1][$int - 1];
-    $time = dateDiv($t1, $t2);
-  }
+}
+}
+ 
 
-  }
 
 
   ?>
@@ -128,11 +136,13 @@
           </thead>
           <tbody>
             <?php
-
+            $no = -1;
             for ($i = 0; $i < count($ip_status); $i++) {
 
               if ($ip_status[$i]['Status'] === "Offline") {
-            ?>
+                  $no = $no +1 ;
+                  
+            ?> 
                 <tr class=" fs-5">
 
                   <td><?php echo $ip_status[$i]['Max']; ?></td>
@@ -141,7 +151,12 @@
                   <td style="color:#E10808;"><?php echo $ip_status[$i]['Status']; ?> </td>
                   <td><?php echo date("d/m/Y ", strtotime($ip_status[$i]["d/m/y"])) ?> </td>
                   <td><?php echo $ip_status[$i]['time']; ?> </td>
-                  <td><?php echo $time['D'] . " วัน " . $time['H'] . " ชั่วโมง " . $time['M'] . " นาที " ?></td>
+
+                <?php  if( $time_off[$no]['D'] == 0 ){  ?>
+                  <td><?php echo  $time_off[$no]['H'] . " ชั่วโมง " . $time_off[$no]['M'] . " นาที " ?></td>
+                  <?php }else {?>
+                    <td><?php echo $time_off[$no]['D'] . " วัน " . $time_off[$no]['H'] . " ชั่วโมง " . $time_off[$no]['M'] . " นาที " ?></td>
+                  <?php }?>
                 </tr>
             <?php
               }
