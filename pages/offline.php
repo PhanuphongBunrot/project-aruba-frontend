@@ -110,7 +110,7 @@ for ($p = 0 ; $p < count($ip_offline_arr) ; $p ++){
 
 }
 }
- 
+print_r($time_off);
 
 
 

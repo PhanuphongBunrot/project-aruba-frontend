@@ -109,26 +109,18 @@
     <?php
     error_reporting(E_ALL ^ E_NOTICE);
     include  '../vendor/autoload.php';
-   
+  
+    
 
     $mon = new MongoDB\Client();
     $conn = $mon->iparuba->ipaps;
     $ip_ap = $conn->find()->toArray();
-
-
-
-   
-
-
-
-
-
-
+    
+    $valou = $_GET['search'];
     $page = isset($_GET['pagev']) && is_numeric($_GET['pagev']) ? $_GET['pagev'] : 1;
-
-
-    $url = "http://127.0.0.1:8000/test?page=" . $page;
-
+    $url  = "http://127.0.0.1:8000/api/search?search=".$valou."&page=".$page;
+    
+    
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -138,15 +130,16 @@
     //for debug only!
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
+    
     $resp = curl_exec($curl);
-    curl_close($curl);
-    $json = json_decode($resp, true);
+    $json = json_decode($resp,true);
+    
+  
 
+  
     $total_pages = $json["total"];
-
+    
     $num_results_on_page = 10;
-
 
     for ($y = 0; $y < count($json["data"]); $y++) {
         $ip_json[] = $json["data"][$y]["Max"];
@@ -158,13 +151,22 @@
 
     $int =  key($inn) - 1;
 
+
+
+
+
+
+    
+
+ 
+
+  
     ?>
     <div class="container">
 
         <div class=" fs-2   shadow p-3 mb-5 bg-body rounded">
             <p class="a"> <?php echo "อัพเดชเวลาล่าสุด " . $json["data"][0]["d/m/y"] . " " . $json["data"][0]["time"]; ?></p>
-            
-            <form data-kt-search-element="form" class="w-100 position-relative mb-3"  action="index.php?page=9&" method="GET">
+            <form data-kt-search-element="form" class="w-100 position-relative mb-3" autocomplete="off" action="">
 
                 <span class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 translate-middle-y ms-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -174,7 +176,7 @@
                 </span>
                 <button type="submit"style="display: none"  name="page" value="9" class="btn-link"></button>
                 <input type="text" class="form-control form-control-flush ps-10" name="search" value="" placeholder="Search...(mac)" data-kt-search-element="input" />
-                
+
 
 
             </form>
@@ -199,17 +201,17 @@
                     <?php
                     //print_r($data[0][1]);
 
-                    $dum = 0;
+                    
                     for ($i = 0; $i < count($json["data"]); $i++) :
 
-                        $int = $int + 1;
+                      
 
                     ?>
                         <tr class=" fs-5">
 
-                            <td><a href="?page=8&mac=<?php echo ($json["data"][$i]["Max"]) ?>"> <?php echo ($json["data"][$i]["Max"]) ?></a></td>
+                        <td><a href="?page=8&mac=<?php echo ($json["data"][$i]["Max"]) ?>"> <?php echo ($json["data"][$i]["Max"]) ?></a></td>
                             <td><?php echo ($json["data"][$i]["ip"]) ?></td>
-                            <td><?php echo ($ip_ap[$int]["Apname"]) ?></td>
+                            <td><?php echo ($json["data"][$i]["Apname"]) ?></td>
                             <?php if ($json["data"][$i]["Status"] === 'Online') { ?>
                                 <td style="color:#65CF01"><?php echo ($json["data"][$i]["Status"]) ?></td>
                                 <td><?php echo date("d/m/Y ", strtotime($json["data"][$i]["d/m/y"])) ?></td>
@@ -221,10 +223,6 @@
                                 <td><?php echo ($json["data"][$i]["d/m/y"]); ?></td>
 
                                 <td><?php echo ($json["data"][$i]["time"]); ?></td>
-
-
-
-
                             <?php } ?>
 
 
@@ -237,30 +235,30 @@
                 <?php if (ceil($total_pages / $num_results_on_page) > 0) : ?>
                     <ul class="pagination">
                         <?php if ($page > 1) : ?>
-                            <li class="prev"><a href="?page=3&pagev=<?php echo $page - 1 ?>">
+                            <li class="prev"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page - 1 ?>">
                                     << </a>
                             </li>
                         <?php endif; ?>
                         <?php if ($page > 3) : ?>
-                            <li class="start"><a href="?page=3&pagev=1">1</a></li>
+                            <li class="start"><a href="?page=9&search=<?php echo $valou ?>&pagev=1">1</a></li>
                             <li class="dots">...</li>
                         <?php endif; ?>
 
-                        <?php if ($page - 2 > 0) : ?><li class="page"><a href="?page=3&pagev=<?php echo $page - 2 ?>"><?php echo $page - 2 ?></a></li><?php endif; ?>
-                        <?php if ($page - 1 > 0) : ?><li class="page"><a href="?page=3&pagev=<?php echo $page - 1 ?>"><?php echo $page - 1 ?></a></li><?php endif; ?>
+                        <?php if ($page - 2 > 0) : ?><li class="page"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page - 2 ?>"><?php echo $page - 2 ?></a></li><?php endif; ?>
+                        <?php if ($page - 1 > 0) : ?><li class="page"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page - 1 ?>"><?php echo $page - 1 ?></a></li><?php endif; ?>
 
-                        <li class="currentpage"><a href="?page=3&pagev=<?php echo $page ?>"><?php echo $page ?></a></li>
+                        <li class="currentpage"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page ?>"><?php echo $page ?></a></li>
 
-                        <?php if ($page + 1 < ceil($total_pages / $num_results_on_page) + 1) : ?><li class="page"><a href="?page=3&pagev=<?php echo $page + 1 ?>"><?php echo $page + 1 ?></a></li><?php endif; ?>
-                        <?php if ($page + 2 < ceil($total_pages / $num_results_on_page) + 1) : ?><li class="page"><a href="?page=3&pagev=<?php echo $page + 2 ?>"><?php echo $page + 2 ?></a></li><?php endif; ?>
+                        <?php if ($page + 1 < ceil($total_pages / $num_results_on_page) + 1) : ?><li class="page"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page + 1 ?>"><?php echo $page + 1 ?></a></li><?php endif; ?>
+                        <?php if ($page + 2 < ceil($total_pages / $num_results_on_page) + 1) : ?><li class="page"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page + 2 ?>"><?php echo $page + 2 ?></a></li><?php endif; ?>
 
                         <?php if ($page < ceil($total_pages / $num_results_on_page) - 2) : ?>
                             <li class="dots">...</li>
-                            <li class="end"><a href="?page=3&pagev=<?php echo ceil($total_pages / $num_results_on_page) ?>"><?php echo ceil($total_pages / $num_results_on_page) ?></a></li>
+                            <li class="end"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo ceil($total_pages / $num_results_on_page) ?>"><?php echo ceil($total_pages / $num_results_on_page) ?></a></li>
                         <?php endif; ?>
 
                         <?php if ($page < ceil($total_pages / $num_results_on_page)) : ?>
-                            <li class="next"><a href="?page=3&pagev=<?php echo $page + 1 ?>"> >> </a></li>
+                            <li class="next"><a href="?page=9&search=<?php echo $valou ?>&pagev=<?php echo $page + 1 ?>"> >> </a></li>
                         <?php endif; ?>
                     </ul>
                 <?php endif; ?>

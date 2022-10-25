@@ -43,6 +43,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
 						include __DIR__ . '/../pages/offline.php';
 					} else if ($page == '8') {
 						include __DIR__ . '/../pages/apname.php';
+					} else if ($page == '9') {
+						include __DIR__ . '/../pages/search.php';
 					} else {
 						// page
 						include '_content.php';

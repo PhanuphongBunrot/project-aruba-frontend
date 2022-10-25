@@ -4,7 +4,7 @@
 										<!--begin::Search-->
 										<div class="d-flex align-items-stretch ms-1 ms-lg-3">
 
-<?php include __DIR__.'/../search/_base.php ';
+<?php //include __DIR__.'/../search/_base.php ';
 
 ?>
 
